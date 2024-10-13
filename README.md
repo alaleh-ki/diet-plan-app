@@ -18,13 +18,12 @@ The **Diet Plan App** is a Node.js application built using Express.js and MongoD
 
 1. Clone the repository:
    ```bash
-   git clone <https://github.com/alaleh-ki/diet-plan-app>
+   git clone https://github.com/alaleh-ki/diet-plan-app
    cd diet-plan-app
 Install dependencies:
 
-bash
-Copy code
-npm install
+   ```bash
+   npm install
 Set up environment variables: Create a .env file in the root directory and add the following:
 
 makefile
@@ -34,16 +33,16 @@ MONGO_URI=<Your MongoDB connection string>
 JWT_SECRET=<Your JWT secret>
 Populate the database: To populate meals and plans data, run the following scripts:
 
-bash
-Copy code
-node populateMeals.js
-node populateplans.js
+   ```bash
+   Copy code
+   node populateMeals.js
+   node populateplans.js
 Running the App
 To start the server in development mode:
 
-bash
-Copy code
-npm run dev
+   ```bash
+   Copy code
+   npm run dev
 The app will run at http://localhost:3000.
 
 API Endpoints
