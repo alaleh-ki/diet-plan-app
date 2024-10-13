@@ -18,7 +18,7 @@ The **Diet Plan App** is a Node.js application built using Express.js and MongoD
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone <https://github.com/alaleh-ki/diet-plan-app>
    cd diet-plan-app
 Install dependencies:
 
