@@ -1,0 +1,63 @@
+[
+    {
+      "name": "Chicken Salad",
+      "calories": 350,
+      "type": "lunch",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Steak and Potatoes",
+      "calories": 600,
+      "type": "dinner",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Pancakes",
+      "calories": 400,
+      "type": "breakfast",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Fruit Smoothie",
+      "calories": 250,
+      "type": "snack",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Vegetable Stir Fry",
+      "calories": 300,
+      "type": "lunch",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Oatmeal",
+      "calories": 150,
+      "type": "breakfast",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Grilled Salmon",
+      "calories": 450,
+      "type": "dinner",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Caesar Salad",
+      "calories": 280,
+      "type": "lunch",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Chocolate Chip Cookies",
+      "calories": 200,
+      "type": "snack",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    },
+    {
+      "name": "Quinoa Bowl",
+      "calories": 350,
+      "type": "dinner",
+      "createdBy": "670b90f3b74fcc8b6aaef32f"
+    }
+  ]
+  

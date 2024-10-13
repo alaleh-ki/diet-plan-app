@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diet Plan API Front-End</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 600px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 16px;
+    }
+    input:focus {
+      border-color: #007BFF;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    button {
+      padding: 12px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      background-color: #f9f9f9;
+      font-size: 16px;
+    }
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+    .toggle-btn {
+      text-align: center;
+      cursor: pointer;
+      color: #007BFF;
+      margin-top: 15px;
+      transition: color 0.2s ease;
+    }
+    .toggle-btn:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+    .meal-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .meal-item {
+    padding: 10px; /* Reduce padding */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Slightly reduce border radius */
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 14px; /* Reduce font size */
+    height: 60px; /* Set a fixed height */
+}
+    .meal-item:hover {
+      background-color: #e0e0e0;
+      transform: translateY(-5px);
+    }
+    .meal-name {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .meal-calories {
+      margin-bottom: 10px;
+      color: #555;
+    }
+    .meal-type {
+      font-size: 14px;
+      color: #777;
+    }
+    #save-plan-btn {
+      margin-top: 20px;
+      background-color: #28a745;
+    }
+    #save-plan-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Diet Plan API</h2>
+  
+  <!-- Registration Form -->
+  <form id="register-form" style="display: none;">
+    <h3>Register</h3>
+    <input type="text" id="register-name" placeholder="Name" required />
+    <input type="email" id="register-email" placeholder="Email" required />
+    <input type="password" id="register-password" placeholder="Password" required />
+    <button type="submit">Register</button>
+    <div class="toggle-btn" id="go-to-login">Already have an account? Login</div>
+  </form>
+  
+  <!-- Login Form -->
+  <form id="login-form">
+    <h3>Login</h3>
+    <input type="email" id="login-email" placeholder="Email" required />
+    <input type="password" id="login-password" placeholder="Password" required />
+    <button type="submit">Login</button>
+    <div class="toggle-btn" id="go-to-register">Don't have an account? Register</div>
+  </form>
+
+  <!-- Plan Display and Edit -->
+  <div id="plan-container" style="display: none;">
+    <h3>Your Plan</h3>
+    <table id="plan-table">
+      <thead>
+        <tr>
+          <th>Meal Name</th>
+          <th>Calories</th>
+          <th>Type</th>
+          <th>Edit</th> <!-- Added Edit column -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Plan data will be populated here -->
+      </tbody>
+    </table>
+    
+    <!-- Edit Plan Section -->
+    <h3>Edit Your Plan</h3>
+    <div class="meal-options" id="meal-options"></div>
+    <!-- <button id="save-plan-btn">Save Changes</button> -->
+  </div>
+</div>
+
+<script>
+  const registerForm = document.getElementById('register-form');
+  const loginForm = document.getElementById('login-form');
+  const planContainer = document.getElementById('plan-container');
+  const planTableBody = document.getElementById('plan-table').querySelector('tbody');
+  const mealOptionsDiv = document.getElementById('meal-options');
+  const savePlanBtn = document.getElementById('save-plan-btn');
+  const goToRegister = document.getElementById('go-to-register');
+  const goToLogin = document.getElementById('go-to-login');
+
+  let selectedMeals = []; // Initialize selectedMeals array
+  let allMeals = []; // Store all available meals for dropdown
+
+  goToRegister.addEventListener('click', () => {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+  });
+
+  goToLogin.addEventListener('click', () => {
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+  });
+
+  // API base URL
+  const API_BASE_URL = 'http://localhost:5000/api/v1';
+
+  // Register function
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('register-name').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+        name, email, password
+      });
+      alert('Registration successful! Please log in.');
+      registerForm.reset();
+      registerForm.style.display = 'none';
+      loginForm.style.display = 'block'; // Show login form after successful registration
+    } catch (error) {
+      alert('Registration failed: ' + error.response.data.msg);
+    }
+  });
+
+  // Login function
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+        email, password
+      });
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      alert('Login successful!');
+      loginForm.reset();
+      loginForm.style.display = 'none'; // Hide login form after successful login
+      registerForm.style.display = 'none'; // Hide registration form
+      getPlan(); // Fetch the user's plan after login
+      fetchMeals(); // Fetch all available meals for selection
+    } catch (error) {
+      alert('Login failed: ' + error.response.data.msg);
+    }
+  });
+
+  // Fetch and display user's plan
+  async function getPlan() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please log in first');
+      return;
+    }
+
+    try {
+      const today = new Date().toISOString().split('T')[0]; // Get today's date
+      const response = await axios.get(`${API_BASE_URL}/plans`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params: {
+          date: today
+        }
+      });
+
+      const planData = response.data; // Fetch plan data
+
+      selectedMeals = planData.plan.meals; // Store selected meals for editing
+
+      displayPlan(planData.plan.meals); // Display meals in table
+    } catch (error) {
+
+      alert('Failed to fetch plan: ' + error.response.data.msg);
+    }
+  }
+
+  // Fetch all meals for dropdown options
+  async function fetchMeals() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please log in first');
+      return;
+    }
+    try {
+      const response = await axios.get(`${API_BASE_URL}/meals`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      allMeals = response.data.meals; // Store all meals for dropdown
+      populateMealOptions(); // Populate meal options
+    } catch (error) {
+      console.log(error)
+      alert('Failed to fetch meals: ' + error.response.data.msg);
+    }
+  }
+
+  // Populate meal options for dropdown
+  function populateMealOptions() {
+    mealOptionsDiv.innerHTML = ''; // Clear existing options
+    allMeals.forEach(meal => {
+        const mealOption = document.createElement('div');
+        mealOption.classList.add('meal-item');
+        mealOption.innerHTML = `
+            <div class="meal-name">${meal.name}</div>
+            <div class="meal-calories">${meal.calories} calories</div>
+            <div class="meal-type">${meal.type}</div>
+            <div class="meal-id" style="display: none;">${meal._id}</div> <!-- Store meal ID -->
+        `;
+        
+        // Add click event to select meal
+        mealOption.addEventListener('click', () => {
+            if (!selectedMeals.some(selectedMeal => selectedMeal._id === meal._id)) {
+                selectedMeals.push(meal); // Add meal to selectedMeals if not already present
+                alert(`${meal.name} added to your meal plan!`);
+                displayPlan(selectedMeals); // Update the displayed plan with selected meals
+            } else {
+                alert(`${meal.name} is already in your meal plan!`);
+            }
+        });
+
+        mealOptionsDiv.appendChild(mealOption);
+    });
+}
+
+
+
+function displayPlan(meals) {
+    planTableBody.innerHTML = ''; // Clear previous data
+
+    meals.forEach((meal, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${meal.name}</td>
+            <td>${meal.calories}</td>
+            <td>${meal.type}</td>
+            <td>
+                <select id="meal-select-${index}">
+                    <option value="">Select a new meal</option>
+                    ${allMeals.map(m => `<option value="${m._id}" ${m._id === meal._id ? 'selected' : ''}>${m.name}</option>`).join('')}
+                </select>
+            </td>
+        `;
+
+        // Add change event listener to the dropdown
+        const select = row.querySelector(`#meal-select-${index}`);
+        select.addEventListener('change', (e) => {
+            const selectedMealId = e.target.value;
+            if (selectedMealId) {
+                const newMeal = allMeals.find(m => m._id === selectedMealId);
+                if (newMeal) {
+                    meals[index] = newMeal; // Update the specific meal in the array
+                    alert(`${newMeal.name} replaced the previous meal!`);
+                    displayPlan(meals); // Update the displayed plan to reflect changes
+                }
+            }
+        });
+
+        planTableBody.appendChild(row);
+    });
+
+    planContainer.style.display = 'block'; // Show plan container
+}
+
+
+
+
+
+savePlanBtn.addEventListener('click', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in first');
+        return;
+    }
+
+    const updatedMeals = selectedMeals.filter(meal => meal); // Filter out any null values
+
+    if (updatedMeals.length === 0) {
+        alert('Please select at least one meal to update.');
+        return;
+    }
+
+    try {
+        const today = new Date().toISOString().split('T')[0]; // Get today's date
+
+        const response = await axios.post(`${API_BASE_URL}/plans`, {
+            date: today, // Include today's date
+            meals: updatedMeals, // Updated meals
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        alert('Plan updated successfully!');
+        getPlan(); // Refresh the plan display
+    } catch (error) {
+        alert('Failed to update plan: ' + error.response.data.msg);
+    }
+});
+
+
+
+
+
+</script>
+
+</body>
+</html>
