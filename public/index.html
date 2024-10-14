@@ -6,138 +6,212 @@
   <title>Diet Plan API Front-End</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+        font-family: 'Arial', sans-serif;
+        background-color: #f7e2e8; /* Light pastel pink */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    
+    .title {
+        text-align: center;
+        color: #a36b9a; /* Pastel purple for distinction */
+        margin-bottom: 20px; /* Space below the title */
+        font-size: 24px; /* Increase font size */
+        font-weight: bold; /* Make title bold */
+        padding: 10px 0; /* Add padding above and below */
+        border-bottom: 2px solid #a36b9a; /* Add a bottom border for separation */
+    }
+    
     .container {
-      width: 600px;
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+        width: 600px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        margin: 20px; /* Add margin to create space around the container */
     }
+    
     h2, h3 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 10px;
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+        padding: 10px; /* Add padding for spacing around headings */
     }
+    
     form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px; /* Add bottom margin for spacing between forms */
     }
+    
     input {
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      font-size: 16px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 16px;
     }
+    
     input:focus {
-      border-color: #007BFF;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        border-color: #a36b9a; /* Pastel purple focus border */
+        outline: none;
+        box-shadow: 0 0 5px rgba(163, 107, 154, 0.5); /* Pastel purple shadow */
     }
+    
     button {
-      padding: 12px;
-      border: none;
-      background-color: #007BFF;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 16px;
+        padding: 12px;
+        border: none;
+        background-color: #d89cc9; /* Pastel pink */
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 16px;
     }
+    
     button:hover {
-      background-color: #0056b3;
+        background-color: #b879a5; /* Darker pastel pink for hover */
     }
+    
+    .table-container {
+        max-height: 300px; /* Set a maximum height for the table */
+        overflow-y: auto;  /* Enable vertical scrolling */
+        margin: 20px 0; /* Add top and bottom margin for spacing */
+    }
+    
     table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
     }
+    
     table, th, td {
-      border: 1px solid #ddd;
+        border: 1px solid #ddd;
     }
+    
     th, td {
-      padding: 12px;
-      text-align: center;
-      background-color: #f9f9f9;
-      font-size: 16px;
+        padding: 12px;
+        text-align: center;
+        background-color: #f9f9f9;
+        font-size: 16px;
     }
+    
     th {
-      background-color: #007BFF;
-      color: white;
+        background-color: #a36b9a; /* Pastel purple for table header */
+        color: white;
     }
+    
     .toggle-btn {
-      text-align: center;
-      cursor: pointer;
-      color: #007BFF;
-      margin-top: 15px;
-      transition: color 0.2s ease;
+        text-align: center;
+        cursor: pointer;
+        color: #a36b9a; /* Pastel purple for toggle links */
+        margin-top: 15px;
+        transition: color 0.2s ease;
     }
+    
     .toggle-btn:hover {
-      color: #0056b3;
-      text-decoration: underline;
+        color: #80506f; /* Darker shade for hover */
+        text-decoration: underline;
     }
+    
     .meal-options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 20px;
     }
+    
     .meal-item {
-    padding: 10px; /* Reduce padding */
-    border: 1px solid #ddd;
-    border-radius: 8px; /* Slightly reduce border radius */
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-size: 14px; /* Reduce font size */
-    height: 60px; /* Set a fixed height */
-}
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        transition: all 0.3s ease;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 14px;
+        height: 60px;
+    }
+    
     .meal-item:hover {
-      background-color: #e0e0e0;
-      transform: translateY(-5px);
+        background-color: #e0e0e0;
+        transform: translateY(-5px);
     }
+    
     .meal-name {
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #333;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
     }
+    
     .meal-calories {
-      margin-bottom: 10px;
-      color: #555;
+        margin-bottom: 10px;
+        color: #555;
     }
+    
     .meal-type {
-      font-size: 14px;
-      color: #777;
+        font-size: 14px;
+        color: #777;
     }
+    
+    /* Centering the Save Changes button */
+    .save-button-container {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        margin-top: 20px; /* Add margin to the top for spacing */
+    }
+    
     #save-plan-btn {
-      margin-top: 20px;
-      background-color: #28a745;
+        background-color: #28a745; /* Green for save button */
     }
+    
     #save-plan-btn:hover {
-      background-color: #218838;
+        background-color: #218838; /* Darker green for hover */
     }
-  </style>
+    
+    .delete-meal-btn {
+        background: none;
+        border: none;
+        color: red;
+        cursor: pointer;
+        font-size: 18px; /* Increase font size for better visibility */
+    }
+    .table-cell {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.table-cell button,
+.table-cell select {
+    margin: 0; /* Remove default margins */
+    padding: 5px 10px; /* Adjust padding as needed */
+}
+
+/* Additional styles to maintain uniform appearance */
+.table-cell .delete-meal-btn {
+    margin-right: 5px; /* Space between button and dropdown */
+}
+
+.table-cell select {
+    border-radius: 5px; /* Slightly round the dropdown */
+}
+    </style>
+    
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-  <h2>Diet Plan API</h2>
+  <h2 class="title">Diet Plan API</h2>
   
   <!-- Registration Form -->
   <form id="register-form" style="display: none;">
@@ -158,31 +232,37 @@
     <div class="toggle-btn" id="go-to-register">Don't have an account? Register</div>
   </form>
 
-  <!-- Plan Display and Edit -->
-  <div id="plan-container" style="display: none;">
-    <h3>Your Plan</h3>
-    <table id="plan-table">
-      <thead>
-        <tr>
-          <th>Meal Name</th>
-          <th>Calories</th>
-          <th>Type</th>
-          <th>Edit</th> <!-- Added Edit column -->
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Plan data will be populated here -->
-      </tbody>
-    </table>
-    
-    <!-- Edit Plan Section -->
-    <h3>Edit Your Plan</h3>
-    <div class="meal-options" id="meal-options"></div>
-    <!-- <button id="save-plan-btn">Save Changes</button> -->
-  </div>
+<!-- Plan Display and Edit -->
+<div id="plan-container" style="display: none;">
+  <h3>Your Plan</h3>
+  <div class="table-container"> <!-- Add this wrapper -->
+      <table id="plan-table">
+          <thead>
+              <tr>
+                  <th>Meal Name</th>
+                  <th>Calories</th>
+                  <th>Type</th>
+                  <th>Edit</th> <!-- Added Edit column -->
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Plan data will be populated here -->
+          </tbody>
+      </table>
+  </div> <!-- Close the wrapper -->
+
+  <!-- Edit Plan Section -->
+  <h3>Edit Your Plan</h3>
+  <div class="meal-options" id="meal-options"></div>
+  <div class="save-button-container">
+    <button id="save-plan-btn">Save Changes</button>
+</div>
+</div>
+
 </div>
 
 <script>
+  
   const registerForm = document.getElementById('register-form');
   const loginForm = document.getElementById('login-form');
   const planContainer = document.getElementById('plan-container');
@@ -239,6 +319,8 @@
         email, password
       });
       const token = response.data.token;
+      console.log(token)
+      localStorage.removeItem('token')
       localStorage.setItem('token', token);
       alert('Login successful!');
       loginForm.reset();
@@ -332,6 +414,7 @@
 
 
 
+
 function displayPlan(meals) {
     planTableBody.innerHTML = ''; // Clear previous data
 
@@ -341,11 +424,15 @@ function displayPlan(meals) {
             <td>${meal.name}</td>
             <td>${meal.calories}</td>
             <td>${meal.type}</td>
-            <td>
+            <td class="table-cell">
                 <select id="meal-select-${index}">
                     <option value="">Select a new meal</option>
-                    ${allMeals.map(m => `<option value="${m._id}" ${m._id === meal._id ? 'selected' : ''}>${m.name}</option>`).join('')}
+                    ${allMeals
+                        .filter(m => m.type === meal.type) // Filter meals by current meal type
+                        .map(m => `<option value="${m._id}" ${m._id === meal._id ? 'selected' : ''}>${m.name}</option>`)
+                        .join('')}
                 </select>
+                <button class="delete-meal-btn" data-index="${index}" style="background: none; border: none; color: red; cursor: pointer;">X</button>
             </td>
         `;
 
@@ -363,13 +450,22 @@ function displayPlan(meals) {
             }
         });
 
+        // Add click event listener to the delete button
+        const deleteButton = row.querySelector('.delete-meal-btn');
+        deleteButton.addEventListener('click', () => {
+            const confirmed = confirm('Are you sure you want to delete this meal?');
+            if (confirmed) {
+                meals.splice(index, 1); // Remove the meal from the meals array
+                displayPlan(meals); // Update the displayed plan
+                alert('Meal deleted successfully!');
+            }
+        });
+
         planTableBody.appendChild(row);
     });
 
     planContainer.style.display = 'block'; // Show plan container
 }
-
-
 
 
 
@@ -382,9 +478,16 @@ savePlanBtn.addEventListener('click', async () => {
 
     const updatedMeals = selectedMeals.filter(meal => meal); // Filter out any null values
 
+    // Check if at least one meal is selected
     if (updatedMeals.length === 0) {
         alert('Please select at least one meal to update.');
         return;
+    }
+
+    // Limit to the first 6 meals
+    if (updatedMeals.length > 6) {
+        alert('You can only add up to 6 meals in a plan.');
+        updatedMeals.splice(6); // Keep only the first 6 meals
     }
 
     try {
@@ -398,6 +501,7 @@ savePlanBtn.addEventListener('click', async () => {
                 Authorization: `Bearer ${token}`
             }
         });
+
         alert('Plan updated successfully!');
         getPlan(); // Refresh the plan display
     } catch (error) {

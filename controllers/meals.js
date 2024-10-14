@@ -22,7 +22,6 @@ const getSingleMeal = async (req, res) => {
   const { id: mealId } = req.params;
   const meal = await Meal.findOne({
     _id: mealId,
-    createdBy: req.user.userId,
   });
 
   if (!meal) {
@@ -56,7 +55,7 @@ const updateMeal = async (req, res) => {
 const deleteMeal = async (req, res) => {
   const { id: mealId } = req.params;
 
-  const meal = await Meal.findOneAndRemove({
+  const meal = await Meal.findOneAndDelete({
     _id: mealId,
     createdBy: req.user.userId,
   });

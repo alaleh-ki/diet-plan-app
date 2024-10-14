@@ -21,9 +21,9 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('<h1>Diet Plan API</h1>');
-});
+// app.get('/', (req, res) => {
+//   res.send('<h1>Diet Plan API</h1>');
+// });
 
 // Routes
 app.use('/api/v1/auth', authRouter);

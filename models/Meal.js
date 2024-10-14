@@ -12,7 +12,7 @@ const MealSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['breakfast', 'lunch', 'dinner', 'snack'],
+    enum: ['meal','snack'],
     required: [true, 'Please provide meal type'],
   },
   createdBy: {
